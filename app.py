@@ -1,11 +1,22 @@
-from flask import Flask
+import csv
+from flask import Flask #simply making html 
 from flask import render_template
 app = Flask(__name__)
+
+def get_csv():
+	csv_path = "static/la-riots-deaths.csv"
+	csv_file = open(csv_path, 'rb')#rd=read binary
+	csv_obj = csv.DictReader(csv_file)
+	csv_list = list(csv_obj)
+	return csv_list
+
+
 
 @app.route('/')
 def index():
 	template = "index.html"
-	return render_template(template)
+	object_list = get_csv()
+	return render_template(template, object_list = object_list)
 
 
 # IF this script is run from command line
